@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoparlör Tasarımı | Performans Görevi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* İstediğin turuncu tonuna en yakın, modern ve okunaklı bir estetik turuncu */
+            --primary-color: #E55B13; 
+            --primary-light: #fff0e6;
+            --bg-color: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --card-bg: #ffffff;
+            --border-color: #edf2f7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Minimalist Header */
+        header {
+            padding: 6rem 2rem 4rem;
+            text-align: center;
+            background-color: var(--bg-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+        }
+
+        header h1 span {
+            color: var(--primary-color);
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            font-weight: 300;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* İnteraktif Alan */
+        .interactive-section {
+            background-color: var(--primary-light);
+            border-radius: 24px;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            border: 1px solid rgba(229, 91, 19, 0.1);
+        }
+
+        .interactive-section h2 {
+            font-size: 1.8rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .slider-container {
+            margin: 3rem 0;
+        }
+
+        input[type=range] {
+            width: 100%;
+            max-width: 400px;
+            accent-color: var(--primary-color);
+            height: 6px;
+            background: #cbd5e0;
+            border-radius: 8px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(229, 91, 19, 0.4);
+            border: 3px solid #fff;
+        }
+
+        .visual-circle {
+            width: 200px;
+            height: 200px;
+            border: 3px solid var(--primary-color);
+            border-radius: 50%;
+            margin: 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.5);
+            transition: transform 0.1s ease-out;
+        }
+
+        .radius-line {
+            position: absolute;
+            width: 50%;
+            height: 2px;
+            background-color: var(--primary-color);
+            right: 0;
+            top: 50%;
+            transform-origin: left;
+        }
+
+        .center-dot {
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .results-flex {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .result-box {
+            background: #fff;
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            min-width: 180px;
+            border: 1px solid var(--border-color);
+        }
+
+        .result-box span.label {
+            display: block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-box span.value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        /* Grid ve Kartlar */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 15px 35px rgba(229, 91, 19, 0.08);
+            border-color: rgba(229, 91, 19, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h3::before {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .math-block {
+            background: #f8fafc;
+            padding: 1.2rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1rem;
+            color: #4a5568;
+            border: 1px dashed #cbd5e0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        ul li::before {
+            content: "•";
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: -2px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Hoparlör <span>Tasarımı</span></h1>
+        <p>Günlük yaşamdaki problemleri matematiksel modellemelerle ve daire/küre geometrisiyle çözme projesi.</p>
+    </header>
+
+    <div class="container">
+        
+        <section class="interactive-section">
+            <h2>İnteraktif Modelleme</h2>
+            <p style="color: var(--text-muted); font-weight: 300;">Şerit uzunluğunu değiştirerek alan verimliliğini test et.</p>
+            
+            <div class="slider-container">
+                <label for="circumferenceSlider" style="font-weight: 600; color: var(--text-main);">
+                    Şerit Uzunluğu (Çevre): <span id="cValue" style="color: var(--primary-color);">60</span> cm
+                </label><br><br>
+                <input type="range" id="circumferenceSlider" min="20" max="120" value="60">
+            </div>
+
+            <div class="visual-circle" id="speakerCircle">
+                <div class="center-dot"></div>
+                <div class="radius-line"></div>
+            </div>
+
+            <div class="results-flex">
+                <div class="result-box">
+                    <span class="label">Yarıçap (r)</span>
+                    <span class="value"><span id="rValue">9.55</span> cm</span>
+                </div>
+                <div class="result-box">
+                    <span class="label">Maksimum Alan (A)</span>
+                    <span class="value"><span id="aValue">286.37</span> cm²</span>
+                </div>
+            </div>
+            <p style="font-size: 0.8rem; color: #a0aec0; margin-top: 2rem;">Hesaplamalarda π (Pi) = 3.14 alınmıştır.</p>
+        </section>
+
+        <div class="grid">
+            <div class="card">
+                <h3>Problem Senaryosu</h3>
+                <p style="color: var(--text-muted);">Elimizde 60 cm uzunluğunda esnek bir şerit bulunmaktadır. Amacımız, bu şeridi kullanarak yapılabilecek maksimum yüzey alanına sahip dairesel hoparlör kasasını tasarlamaktır.</p>
+            </div>
+
+            <div class="card">
+                <h3>Günlük Yaşamda Verimlilik</h3>
+                <p style="color: var(--text-muted);">Belirli bir çevre uzunluğuna sahip şekiller arasında en büyük alanı daire verir. Hoparlörde geniş yüzey alanı, daha fazla havayı hareket ettirerek bas seslerin kaliteli yayılmasını sağlar.</p>
+            </div>
+
+            <div class="card">
+                <h3>Geometrik Elemanlar</h3>
+                <ul>
+                    <li><strong>Merkez:</strong> Dairenin tam orta noktası.</li>
+                    <li><strong>Yarıçap (r):</strong> Merkezden çembere olan uzaklık.</li>
+                    <li><strong>Çap (R):</strong> Merkezden geçen ve çemberi kesen doğru.</li>
+                    <li><strong>Merkez Açı:</strong> Köşesi merkezde olan açı (Örn: α=120°).</li>
+                    <li><strong>Kiriş:</strong> Çember üzerindeki iki noktayı birleştiren doğru.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Matematiksel İspat</h3>
+                <div class="math-block">
+                    <strong>Adım 1: Yarıçapı Bulma</strong><br>
+                    C = 2 · π · r<br>
+                    60 = 2 · 3 · r  ⇒  r = 10 cm
+                </div>
+                <div class="math-block">
+                    <strong>Adım 2: Alanı Bulma</strong><br>
+                    A = π · r²<br>
+                    A = 3 · 10²  ⇒  A = 300 cm²
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">* Bu hesaplamada kolaylık için π = 3 alınmıştır.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Geometri Performans Görevi &copy; 2026</p>
+    </footer>
+
+    <script>
+        const slider = document.getElementById('circumferenceSlider');
+        const cValue = document.getElementById('cValue');
+        const rValue = document.getElementById('rValue');
+        const aValue = document.getElementById('aValue');
+        const visualCircle = document.getElementById('speakerCircle');
+
+        const PI = 3.14;
+
+        function updateCalculations() {
+            const C = parseFloat(slider.value);
+            cValue.textContent = C;
+
+            const r = C / (2 * PI);
+            rValue.textContent = r.toFixed(2);
+
+            const A = PI * Math.pow(r, 2);
+            aValue.textContent = A.toFixed(2);
+
+            const scale = C / 60;
+            const visualScale = Math.min(Math.max(scale, 0.3), 1.6); 
+            visualCircle.style.transform = `scale(${visualScale})`;
+        }
+
+        slider.addEventListener('input', updateCalculations);
+        updateCalculations();
+    </script>
+</body>
+</html>
