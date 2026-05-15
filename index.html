@@ -245,6 +245,11 @@
             top: -2px;
         }
 
+        /* Kaynakça kartının tam genişlikte olması için */
+        .full-width-card {
+            grid-column: 1 / -1;
+        }
+
         footer {
             text-align: center;
             padding: 3rem 2rem;
@@ -259,6 +264,9 @@
             }
             header h1 {
                 font-size: 2.2rem;
+            }
+            .full-width-card {
+                grid-column: 1 / 1;
             }
         }
     </style>
@@ -336,6 +344,17 @@
                     A = 3 · 10²  ⇒  A = 300 cm²
                 </div>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">* Bu hesaplamada kolaylık için π = 3 alınmıştır.</p>
+            </div>
+
+            <!-- Yeni Eklenen Kaynakça Bölümü -->
+            <div class="card full-width-card">
+                <h3>Kaynakça</h3>
+                <ul>
+                    <li><strong>MEB Matematik Öğretim Programı:</strong> Ortaöğretim Geometri, Çember ve Daire Kazanımları.</li>
+                    <li><strong>Khan Academy Türkçe:</strong> Çemberin Çevresi ve Dairenin Alanı Konu Anlatımları.</li>
+                    <li><strong>TÜBİTAK Bilim Genç:</strong> Geometrinin Günlük Hayattaki ve Akustikteki Uygulamaları.</li>
+                    <li><strong>MDN Web Docs:</strong> İnteraktif Modelleme için HTML, CSS ve JavaScript Referansları.</li>
+                </ul>
             </div>
         </div>
 
